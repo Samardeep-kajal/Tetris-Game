@@ -1,0 +1,18 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+
+body {
+  font-family: "Lobster", Verdana, Geneva, Tahoma, sans-serif;
+} */
+
+.grid {
+  width: 200px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: yellow;
+}
+.grid div {
+  height: 20px;
+  width: 20px;
+  background-color: red;
+}
