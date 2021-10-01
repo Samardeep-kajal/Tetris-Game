@@ -72,6 +72,19 @@ document.addEventListener("DOMContentLoaded", () => {
   //Making tetromino move down every second
   timerId = setInterval(moveDown, 1000);
 
+  function control(e) {
+    if (e.keyCode === 37) {
+      moveLeft();
+    } else if (e.keycode === 38) {
+      //rotate()
+    } else if (e.keycode === 39) {
+      moveRight();
+    } else if (e.keycode === 40) {
+      moveDown();
+    }
+  }
+  document.addEventListener("keyup", control);
+
   //Move down function
   function moveDown() {
     undraw();
@@ -91,11 +104,47 @@ document.addEventListener("DOMContentLoaded", () => {
       current.forEach((index) =>
         squares[currentPosition + index].classList.add("taken")
       );
+      //Start a new tetromino to fall
+      random = Math.floor(Math.random() * Tetrominoes.length);
+      current = Tetrominoes[random][currentRotation];
+      currentPosition = 4;
+      draw();
     }
-    //Start a new tetromino to fall
-    random = Math.floor(Math.random() * Tetrominoes.length);
-    current = Tetrominoes[random][currentRotation];
-    currentPosition = 4;
+  }
+
+  //To move tetromino to the left until the blockage boundary.
+  function moveLeft() {
+    undraw();
+    const leftBoundary = current.some(
+      (index) => (currentPosition + index) % width === 0
+    );
+
+    if (!leftBoundary) currentPosition -= 1;
+    if (
+      current.some((index) =>
+        squares[currentPosition + index].classList.contains("taken")
+      )
+    ) {
+      currentPosition += 1;
+    }
+
+    draw();
+  }
+
+  // To move the Tetromino on the right side till the specific boundary of tetris pad.
+  function moveRight() {
+    undraw();
+    const rightBoundary = current.some(
+      (index) => (currentPosition + index) % width === width - 1
+    );
+    if (!leftBoundary) currentPosition += 1;
+    if (
+      current.some((index) =>
+        squares[currentPosition + index].classList.contains("taken")
+      )
+    ) {
+      currentPosition -= 1;
+    }
     draw();
   }
 });
