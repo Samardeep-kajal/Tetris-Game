@@ -20,3 +20,17 @@ body {
 .tetromino {
   background-color: blue;
 }
+
+.mini-grid {
+  margin-top: 20px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: yellow;
+}
+
+.mini-grid div {
+  width: 20px;
+  height: 20px;
+}
