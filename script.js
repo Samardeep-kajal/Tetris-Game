@@ -75,11 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function control(e) {
     if (e.keyCode === 37) {
       moveLeft();
-    } else if (e.keycode === 38) {
-      //rotate()
-    } else if (e.keycode === 39) {
+    } else if (e.keyCode === 38) {
+      Rotate();
+    } else if (e.keyCode === 39) {
       moveRight();
-    } else if (e.keycode === 40) {
+    } else if (e.keyCode === 40) {
       moveDown();
     }
   }
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const rightBoundary = current.some(
       (index) => (currentPosition + index) % width === width - 1
     );
-    if (!leftBoundary) currentPosition += 1;
+    if (!rightBoundary) currentPosition += 1;
     if (
       current.some((index) =>
         squares[currentPosition + index].classList.contains("taken")
@@ -146,5 +146,16 @@ document.addEventListener("DOMContentLoaded", () => {
       currentPosition -= 1;
     }
     draw();
+  }
+
+  //To rotate the tetromino
+  function Rotate() {
+    undraw();
+    currentRotation++;
+    if (currentRotation === current.length) {
+      //if the current rotation gets to 5, it will go back to 0
+      currentRotation = 0;
+    }
+    current = Tetrominoes[random][currentRotation];
   }
 });
