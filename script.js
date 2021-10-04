@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let timerId;
   let scores = 0;
 
+  const colors = ["orange", "red", "purple", "green", "blue"];
+
   const lTetromino = [
     [1, width + 1, width * 2 + 1, 2],
     [width, width + 1, width + 2, width * 2 + 2],
@@ -55,6 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentPosition = 4;
   let currentRotation = 0;
 
+  console.log(Tetrominoes[0][0]);
+
+  //Random selection of tetrominoes
   let random = Math.floor(Math.random() * Tetrominoes.length);
   let current = Tetrominoes[random][currentRotation];
 
@@ -62,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function draw() {
     current.forEach((index) => {
       squares[currentPosition + index].classList.add("tetromino");
+      squares[currentPosition + index].style.backgroundColor = colors[random];
     });
   }
 
@@ -69,12 +75,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function undraw() {
     current.forEach((index) => {
       squares[currentPosition + index].classList.remove("tetromino");
+      squares[currentPosition + index].style.backgroundColor = "";
     });
   }
 
   //Making tetromino move down every second
-  timerId = setInterval(moveDown, 1000);
+  timerId = setInterval(moveDown, 500);
 
+  //giving keyCodes to the functions.
   function control(e) {
     if (e.keyCode === 37) {
       moveLeft();
@@ -160,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     undraw();
     currentRotation++;
     if (currentRotation === current.length) {
-      //if the current rotation gets to 5, it will go back to 0
+      //if the current rotation gets to 4, it will go back to 0
       currentRotation = 0;
     }
     current = Tetrominoes[random][currentRotation];
@@ -185,12 +193,15 @@ document.addEventListener("DOMContentLoaded", () => {
   function showShape() {
     showSquares.forEach((squares) => {
       squares.classList.remove("tetromino");
+      squares.style.backgroundColor = "";
     });
     upNextTetromino[nextRandom].forEach((index) => {
       showSquares[showWidth + index].classList.add("tetromino");
+      showSquares[showWidth + index].style.backgroundColor = colors[nextRandom];
     });
   }
 
+  //Adding function to the button.
   startBtn.addEventListener("click", () => {
     if (timerId) {
       clearInterval(timerId);
@@ -224,6 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
         row.forEach((index) => {
           squares[index].classList.remove("taken");
           squares[index].classList.remove("tetromino");
+          squares[index].style.backgroundColor = "";
         });
         const squaresRemoved = squares.splice(i, width);
         squares = squaresRemoved.concat(squares);
