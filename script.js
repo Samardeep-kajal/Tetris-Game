@@ -126,6 +126,13 @@ document.addEventListener("DOMContentLoaded", () => {
       gameOver();
     }
   }
+  function atRight() {
+    return current.some((index) => (currentPosition + index) % width == 0);
+  }
+
+  function atLeft() {
+    return current.some((index) => (currentPosition + index) % width == 0);
+  }
 
   //To move tetromino to the left until the blockage boundary.
   function moveLeft() {
@@ -161,6 +168,20 @@ document.addEventListener("DOMContentLoaded", () => {
       currentPosition -= 1;
     }
     draw();
+  }
+  function checkRotatedPosition(p) {
+    p = p || currentPosition;
+    if ((p + 1) % width < 4) {
+      if (atRight()) {
+        currentPosition += 1;
+        checkRotatedPosition(p);
+      }
+    } else if (p % width > 5) {
+      if (atLeft()) {
+        currentPosition -= 1;
+        checkRotatedPosition(p);
+      }
+    }
   }
 
   //To rotate the tetromino
